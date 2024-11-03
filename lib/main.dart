@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: HomePage(),
+      home: MainMenu(),
     );
   }
 }
@@ -22,31 +22,71 @@ class Sport {
   final String name;
   final String imageUrl;
   final String description;
+  final String location;
+  final double price;
 
-  Sport({required this.name, required this.imageUrl, required this.description});
+  Sport({
+    required this.name,
+    required this.imageUrl,
+    required this.description,
+    required this.location,
+    required this.price,
+  });
 }
 
-class HomePage extends StatelessWidget {
+// Main Menu (Menu Utama)
+class MainMenu extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Menu Utama'),
+      ),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => SportListPage()),
+            );
+          },
+          child: Text('Daftar Tempat Olahraga'),
+        ),
+      ),
+    );
+  }
+}
+
+// Daftar Tempat Olahraga
+class SportListPage extends StatelessWidget {
   final List<Sport> sports = [
     Sport(
       name: 'Gym',
       imageUrl: 'istockphoto-1391410249-612x612.jpg',
       description: 'Tempat terbaik untuk berolahraga dan menjaga kebugaran.',
+      location: 'Jakarta',
+      price: 50000,
     ),
     Sport(
       name: 'Lapangan Tenis',
       imageUrl: '16755829300.png',
       description: 'Lapangan tenis profesional untuk semua level.',
+      location: 'Bandung',
+      price: 75000,
     ),
     Sport(
       name: 'Futsal',
       imageUrl: 'images.jpeg',
       description: 'Lapangan futsal yang nyaman untuk bermain bersama teman.',
+      location: 'Surabaya',
+      price: 60000,
     ),
     Sport(
       name: 'Basket',
       imageUrl: '730-e1708318015613.jpg',
       description: 'Lapangan basket untuk menyalurkan hobi Anda.',
+      location: 'Bali',
+      price: 70000,
     ),
   ];
 
@@ -54,77 +94,31 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Sistem Pemesanan Tempat Olahraga'),
+        title: Text('Daftar Tempat Olahraga'),
       ),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Text(
-              'Temukan Tempat Olahraga Anda',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-          ),
-          Expanded(
-            child: GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
-                childAspectRatio: 0.75,
-              ),
-              itemCount: sports.length,
-              itemBuilder: (context, index) {
-                return SportCard(
-                  sport: sports[index],
-                  onTap: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => SportDetailPage(sport: sports[index]),
-                      ),
-                    );
-                  },
-                );
-              },
-            ),
-          ),
-        ],
+      body: ListView.builder(
+        itemCount: sports.length,
+        itemBuilder: (context, index) {
+          return ListTile(
+            leading: Image.asset(sports[index].imageUrl, width: 50, height: 50),
+            title: Text(sports[index].name),
+            subtitle: Text('${sports[index].location} - Rp${sports[index].price}'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => SportDetailPage(sport: sports[index]),
+                ),
+              );
+            },
+          );
+        },
       ),
     );
   }
 }
 
-class SportCard extends StatelessWidget {
-  final Sport sport;
-  final VoidCallback onTap;
-
-  const SportCard({
-    required this.sport,
-    required this.onTap,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Card(
-        elevation: 5,
-        child: Column(
-          children: [
-            Image.asset(sport.imageUrl, fit: BoxFit.cover, height: 100),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Text(
-                sport.name,
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-              ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
+// Lihat Tempat Olahraga
 class SportDetailPage extends StatelessWidget {
   final Sport sport;
 
@@ -150,10 +144,10 @@ class SportDetailPage extends StatelessWidget {
             onPressed: () {
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => BookingPage(sport: sport)),
+                MaterialPageRoute(builder: (context) => DateTimeSelectionPage(sport: sport)),
               );
             },
-            child: Text('Pesan Sekarang'),
+            child: Text('Pilih Tanggal dan Waktu'),
           ),
         ],
       ),
@@ -161,6 +155,54 @@ class SportDetailPage extends StatelessWidget {
   }
 }
 
+// Pilih Tanggal dan Waktu
+class DateTimeSelectionPage extends StatelessWidget {
+  final Sport sport;
+
+  const DateTimeSelectionPage({required this.sport});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Pilih Tanggal dan Waktu'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            Text(
+              'Pilih tanggal dan waktu untuk ${sport.name}',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            // Mock date and time selection (could be DatePicker in real app)
+            TextField(
+              decoration: InputDecoration(labelText: 'Tanggal (DD/MM/YYYY)'),
+            ),
+            TextField(
+              decoration: InputDecoration(labelText: 'Waktu (HH:MM)'),
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                // For demonstration, we’ll assume the slot is available
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => BookingPage(sport: sport),
+                  ),
+                );
+              },
+              child: Text('Cek Ketersediaan Slot'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// Sewa (Booking)
 class BookingPage extends StatelessWidget {
   final Sport sport;
 
@@ -170,14 +212,14 @@ class BookingPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Pesan ${sport.name}'),
+        title: Text('Sewa ${sport.name}'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
             Text(
-              'Pesanan untuk ${sport.name}',
+              'Pemesan untuk ${sport.name}',
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
             ),
             TextField(
@@ -189,9 +231,9 @@ class BookingPage extends StatelessWidget {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                // Logika untuk melakukan pemesanan
+                // Mock booking confirmation
                 ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Pemesan berhasil dibuat!')),
+                  SnackBar(content: Text('Pemesanan berhasil!')),
                 );
               },
               child: Text('Kirim Pemesanan'),
