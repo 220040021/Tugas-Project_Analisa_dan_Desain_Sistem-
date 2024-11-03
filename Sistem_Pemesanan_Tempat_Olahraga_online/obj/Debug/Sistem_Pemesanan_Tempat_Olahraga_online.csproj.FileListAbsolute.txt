@@ -1,0 +1,7 @@
+C:\Users\Asus\source\repos\ProgramVisual\coba_1\Sistem_Pemesanan_Tempat_Olahraga_online\obj\Debug\Sistem_Pemesanan_Tempat_Olahraga_online.csproj.AssemblyReference.cache
+C:\Users\Asus\source\repos\ProgramVisual\coba_1\Sistem_Pemesanan_Tempat_Olahraga_online\obj\Debug\Sistem_Pemesanan_Tempat_Olahraga_online.csproj.CoreCompileInputs.cache
+C:\Users\Asus\source\repos\ProgramVisual\coba_1\Sistem_Pemesanan_Tempat_Olahraga_online\bin\Debug\Sistem_Pemesanan_Tempat_Olahraga_online.exe.config
+C:\Users\Asus\source\repos\ProgramVisual\coba_1\Sistem_Pemesanan_Tempat_Olahraga_online\bin\Debug\Sistem_Pemesanan_Tempat_Olahraga_online.exe
+C:\Users\Asus\source\repos\ProgramVisual\coba_1\Sistem_Pemesanan_Tempat_Olahraga_online\bin\Debug\Sistem_Pemesanan_Tempat_Olahraga_online.pdb
+C:\Users\Asus\source\repos\ProgramVisual\coba_1\Sistem_Pemesanan_Tempat_Olahraga_online\obj\Debug\Sistem_Pemesanan_Tempat_Olahraga_online.exe
+C:\Users\Asus\source\repos\ProgramVisual\coba_1\Sistem_Pemesanan_Tempat_Olahraga_online\obj\Debug\Sistem_Pemesanan_Tempat_Olahraga_online.pdb
