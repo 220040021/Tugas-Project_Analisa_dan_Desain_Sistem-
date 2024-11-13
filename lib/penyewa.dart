@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MainMenu(),
+      home: LoginPage(),
     );
   }
 }
@@ -34,13 +34,107 @@ class Sport {
   });
 }
 
-// Main Menu (Menu Utama)
+// Login Page
+class LoginPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Halaman Login'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            TextField(
+              decoration: InputDecoration(labelText: 'Username'),
+            ),
+            TextField(
+              decoration: InputDecoration(labelText: 'Password'),
+              obscureText: true,
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => MainMenu()),
+                );
+              },
+              child: Text('Login'),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => RegisterPage()),
+                );
+              },
+              child: Text('Belum Memiliki Akun? Daftar'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// Registration Page
+class RegisterPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Daftar Akun'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            TextField(
+              decoration: InputDecoration(labelText: 'Username'),
+            ),
+            TextField(
+              decoration: InputDecoration(labelText: 'Password'),
+              obscureText: true,
+            ),
+            TextField(
+              decoration: InputDecoration(labelText: 'Konfirmasi Password'),
+              obscureText: true,
+            ),
+            SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pop(context); // Navigate back to Login after registration
+              },
+              child: Text('Daftar'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// Main Menu
 class MainMenu extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text('Menu Utama'),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.logout),
+            onPressed: () {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => LoginPage()),
+                (Route<dynamic> route) => false,
+              );
+            },
+          )
+        ],
       ),
       body: Center(
         child: ElevatedButton(
@@ -175,7 +269,6 @@ class DateTimeSelectionPage extends StatelessWidget {
               'Pilih tanggal dan waktu untuk ${sport.name}',
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            // Mock date and time selection (could be DatePicker in real app)
             TextField(
               decoration: InputDecoration(labelText: 'Tanggal (DD/MM/YYYY)'),
             ),
@@ -185,7 +278,6 @@ class DateTimeSelectionPage extends StatelessWidget {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                // For demonstration, we’ll assume the slot is available
                 Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -231,7 +323,6 @@ class BookingPage extends StatelessWidget {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-                // Mock booking confirmation
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(content: Text('Pemesanan berhasil!')),
                 );
